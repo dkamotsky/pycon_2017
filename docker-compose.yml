@@ -1,0 +1,24 @@
+version: "3.4"
+
+services:
+  tse:
+    build:
+      context: ./
+      target: unit3
+    ports:
+     - "8888:8888" #default Jupyter port
+     - "6006:6006" #tensorboard
+    volumes:
+     - .:/app
+     - ${TSE_CACHE:-/home/denis/MODELS/}:/app/model_cache
+    environment:
+     - PYTORCH_TRANSFORMERS_CACHE=/app/model_cache
+     - PYTORCH_PRETRAINED_BERT_CACHE=/app/model_cache
+
+
+networks:
+    default:
+      ipam:
+        config:
+          - subnet: 10.147.147.0/16
+     
